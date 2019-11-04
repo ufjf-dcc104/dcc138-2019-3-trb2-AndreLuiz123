@@ -7,6 +7,8 @@
     <title>Magic Damas</title>
     <script src="Map.js"></script>
     <script src="Bomberman.js"></script>
+    <script src="Bomba.js"></script>
+    
 </head>
 
 <body>
@@ -22,8 +24,15 @@
 
        // canvas.width = mapa.SIZE*mapa.COLUMNS;
        // canvas.height = mapa.SIZE*mapa.LINES;
+       teclas = {
+        cima : 0,
+        baixo : 0,
+        direita : 0,
+        esquerda : 0,
+        espaco : 0
+       }
 
-        var bomberman = new Bomberman();
+        var bomberman = new Bomberman({},mapa);
         
         function passo(t) {
             dt = (t - anterior) / 1000;
@@ -32,6 +41,15 @@
 
             bomberman.desenhar(ctx);
             bomberman.mover(dt);
+            bomberman.controlePorTeclas({teclas:teclas});
+
+            for(var i = 0; i<bomberman.bombas.length; i++)
+            {
+                bomberman.bombas[i].desenhar(ctx);
+                bomberman.bombas[i].processoExplosao(dt);  
+                bomberman.bombas[i].encontraCell(); 
+            }
+
 
             anterior = t;
             ctx.fillStyle = "black";
@@ -40,6 +58,54 @@
         }
 
         var dt, anterior = 0;
+
+        addEventListener("keydown", function(e){
+          //  console.log(e.keyCode);
+            switch(e.keyCode)
+            {
+                
+                case 37:
+                teclas.esquerda = 1;
+                break;
+                case 38:
+                teclas.cima = 1;
+                break;
+                case 39:
+                teclas.direita = 1;
+                break;
+                case 40:
+                teclas.baixo = 1;
+                break;
+                case 32:
+                teclas.espaco = 1;
+                break;
+            }
+
+        })
+
+        addEventListener("keyup", function(e){
+            switch(e.keyCode)
+            {
+
+                case 37:
+                teclas.esquerda = 0;
+                break;
+                case 38:
+                teclas.cima = 0;
+                break;
+                case 39:
+                teclas.direita = 0;
+                break;
+                case 40:
+                teclas.baixo = 0;
+                break;
+                case 32:
+                teclas.espaco = 0;
+                break;
+            }
+
+        })
+
         requestAnimationFrame(passo);
 
     </script>

@@ -13,7 +13,19 @@ function Map(modelo){
             exemplo.cells[c][l] = { tipo: 0 };
         }
     }
+/*
+    if (modelo.m) {
+        for (var c = 0; c < this.COLUMNS; c++) {
+            for (var l = 0; l < this.LINES; l++) {
+                this.cells[c][l] = { tipo: modelo.m[l][c] };
+            }
+        }
+    }*/
+
 }
+
+Map.prototype = new Map();
+Map.prototype.constructor = Map;
 
 Map.prototype.desenhar = function(ctx){
     var cor = "black";
