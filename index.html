@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magic Damas</title>
+    <script src="Map.js"></script>
+    <script src="Bomberman.js"></script>
+</head>
+
+<body>
+    <canvas></canvas>
+    <script>
+
+        var canvas = document.querySelector("canvas");
+        var ctx = canvas.getContext("2d");
+        var mapa = new Map();
+
+        canvas.width = mapa.COLUMNS*mapa.SIZE;
+        canvas.height = mapa.LINES*mapa.SIZE;
+
+       // canvas.width = mapa.SIZE*mapa.COLUMNS;
+       // canvas.height = mapa.SIZE*mapa.LINES;
+
+        var bomberman = new Bomberman();
+        
+        function passo(t) {
+            dt = (t - anterior) / 1000;
+
+            mapa.desenhar(ctx);
+
+            bomberman.desenhar(ctx);
+            bomberman.mover(dt);
+
+            anterior = t;
+            ctx.fillStyle = "black";
+            ctx.fillText(1 / dt, 10, 20);
+            requestAnimationFrame(passo);
+        }
+
+        var dt, anterior = 0;
+        requestAnimationFrame(passo);
+
+    </script>
+</body>
+
+</html>
