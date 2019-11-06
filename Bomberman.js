@@ -12,7 +12,8 @@ function Bomberman(modelo, map){
         ml2:0,
         bombas: [],
         nBombas: 1,
-        bombaAtual: 0
+        bombaAtual: 0,
+        corBomberman: "blue"
     }
 
     this.map = map;
@@ -24,7 +25,7 @@ function Bomberman(modelo, map){
 }
 
 Bomberman.prototype.desenhar = function(ctx){
-    ctx.fillStyle = "blue";
+    ctx.fillStyle = this.corBomberman;
     ctx.fillRect(this.x, this.y, this.w, this.h);
     ctx.strokeStyle = "black";
     ctx.strokeRect(this.x, this.y, this.w, this.h);
