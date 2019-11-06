@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Magic Damas</title>
+    <title>bomberman</title>
     <script src="Map.js"></script>
     <script src="Bomberman.js"></script>
     <script src="Bomba.js"></script>
@@ -17,7 +17,19 @@
 
         var canvas = document.querySelector("canvas");
         var ctx = canvas.getContext("2d");
-        var mapa = new Map();
+        var mapa = new Map({COLUMNS:11, LINES:9, SIZE:64, m:
+        [
+        [1,1,1,1,1,1,1,1,1,1,1],
+        [1,0,0,2,2,2,2,2,2,2,1],
+        [1,0,1,2,1,2,1,2,1,2,1],
+        [1,2,2,2,2,2,2,2,2,2,1],
+        [1,2,1,2,1,2,1,2,1,2,1],
+        [1,2,2,2,2,2,2,2,2,2,1],
+        [1,2,1,2,1,2,1,2,1,0,1],
+        [1,2,2,2,2,2,2,2,0,0,1],
+        [1,1,1,1,1,1,1,1,1,1,1],
+        ]
+        });
 
         canvas.width = mapa.COLUMNS*mapa.SIZE;
         canvas.height = mapa.LINES*mapa.SIZE;
@@ -32,7 +44,17 @@
         espaco : 0
        }
 
-        var bomberman = new Bomberman({},mapa);
+       teclas2 = {
+        W : 0,
+        S : 0,
+        D : 0,
+        A : 0,
+        E : 0
+       }
+
+        var bomberman = new Bomberman({x:70, y:70},mapa);
+        var bomberman2 = new Bomberman({corBomba:"blue", x:64*9+6, y:64*7+6},mapa);
+    
         
         function passo(t) {
             dt = (t - anterior) / 1000;
@@ -42,6 +64,14 @@
             bomberman.desenhar(ctx);
             bomberman.mover(dt);
             bomberman.controlePorTeclas({teclas:teclas});
+           // bomberman.aplicaRestricoes(dt);
+           // bomberman.encontraCell();
+
+            bomberman2.desenhar(ctx);
+            bomberman2.mover(dt);
+            bomberman2.controlePorTeclas({teclas:teclas2});
+
+            
 
             for(var i = 0; i<bomberman.bombas.length; i++)
             {
@@ -60,7 +90,7 @@
         var dt, anterior = 0;
 
         addEventListener("keydown", function(e){
-          //  console.log(e.keyCode);
+            console.log(e.keyCode);
             switch(e.keyCode)
             {
                 
@@ -78,6 +108,22 @@
                 break;
                 case 32:
                 teclas.espaco = 1;
+                break;
+
+                case 65:
+                teclas.A = 1;
+                break;
+                case 87:
+                teclas.W = 1;
+                break;
+                case 68:
+                teclas.D = 1;
+                break;
+                case 83:
+                teclas.S = 1;
+                break;
+                case 69:
+                teclas.E = 1;
                 break;
             }
 
@@ -101,6 +147,22 @@
                 break;
                 case 32:
                 teclas.espaco = 0;
+                break;
+
+                case 65:
+                teclas.A = 0;
+                break;
+                case 87:
+                teclas.W = 0;
+                break;
+                case 68:
+                teclas.D = 0;
+                break;
+                case 83:
+                teclas.S = 0;
+                break;
+                case 69:
+                teclas.E = 0;
                 break;
             }
 

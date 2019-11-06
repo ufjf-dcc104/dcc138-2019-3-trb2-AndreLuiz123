@@ -1,33 +1,29 @@
-function Map(modelo){
+function Map(modelo) {
     exemplo = {
-        cells : [],
-        COLUMNS : 8,
-        LINES : 8,
-        SIZE : 64
+        cells: [],
+        LINES: 32,
+        COLUMNS: 32,
+        SIZE: 32,
+        m:undefined
     }
-
     Object.assign(this, exemplo, modelo);
     for (var c = 0; c < this.COLUMNS; c++) {
         this.cells[c] = [];
         for (var l = 0; l < this.LINES; l++) {
             exemplo.cells[c][l] = { tipo: 0 };
+           
         }
     }
-/*
     if (modelo.m) {
         for (var c = 0; c < this.COLUMNS; c++) {
             for (var l = 0; l < this.LINES; l++) {
                 this.cells[c][l] = { tipo: modelo.m[l][c] };
             }
         }
-    }*/
-
+    }
 }
 
-Map.prototype = new Map();
-Map.prototype.constructor = Map;
-
-Map.prototype.desenhar = function(ctx){
+Map.prototype.desenhar = function (ctx) {
     var cor = "black";
     for (var c = 0; c < this.COLUMNS; c++) {
         for (var l = 0; l < this.LINES; l++) {

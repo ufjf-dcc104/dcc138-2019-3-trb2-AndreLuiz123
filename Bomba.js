@@ -7,7 +7,8 @@ function Bomba(modelo){
         mc : -1,
         ml : -1,
         grid: undefined,
-        tempoExplosao: 0
+        tempoExplosao: 0,
+        corBomba: "red"
     }
 
     Object.assign(this, exemplo, modelo);
@@ -15,7 +16,7 @@ function Bomba(modelo){
 
 Bomba.prototype.desenhar = function(ctx){
     if(this.x>0 && this.y>0){
-        ctx.fillStyle = "red";
+        ctx.fillStyle = this.corBomba;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.raio, 0, 2 * Math.PI);
         ctx.fill();
@@ -26,8 +27,10 @@ Bomba.prototype.desenhar = function(ctx){
 Bomba.prototype.explodir = function(){
     for(var i = 0; i<this.alcance; i++)
     {
-        if(this.mc+i<8 && this.grid.cells[this.mc+i][this.ml].tipo != 1)
-            this.grid.cells[this.mc+i][this.ml].tipo = 2;
+        if(this.mc+i<this.grid.COLUMNS && this.grid.cells[this.mc+i][this.ml].tipo != 1)
+        {
+            this.grid.cells[this.mc+i][this.ml].tipo = 0;
+        }
         else
         break;
     }
@@ -35,15 +38,21 @@ Bomba.prototype.explodir = function(){
     for(var i = 0; i<this.alcance; i++)
     {
         if(this.mc-i>=0 && this.grid.cells[this.mc-i][this.ml].tipo != 1)
-            this.grid.cells[this.mc-i][this.ml].tipo = 2;
+        {
+            this.grid.cells[this.mc-i][this.ml].tipo = 0;
+        }
         else
         break;
+
+
     }
 
     for(var i = 0; i<this.alcance; i++)
     {
-        if(this.ml+i<8 && this.grid.cells[this.mc][this.ml+i].tipo != 1)
-            this.grid.cells[this.mc][this.ml+i].tipo = 2;
+        if(this.ml+i<this.grid.LINES && this.grid.cells[this.mc][this.ml+i].tipo != 1)
+        {
+            this.grid.cells[this.mc][this.ml+i].tipo = 0;
+        }
         else
         break;
     }
@@ -51,7 +60,9 @@ Bomba.prototype.explodir = function(){
     for(var i = 0; i<this.alcance; i++)
     {
         if(this.ml-i>=0 && this.grid.cells[this.mc][this.ml-i].tipo != 1)
-            this.grid.cells[this.mc][this.ml-i].tipo = 2;
+        {
+            this.grid.cells[this.mc][this.ml-i].tipo = 0;
+        }
         else
         break;
     }
