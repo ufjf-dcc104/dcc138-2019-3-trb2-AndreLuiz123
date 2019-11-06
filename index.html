@@ -69,7 +69,7 @@
 
             bomberman2.desenhar(ctx);
             bomberman2.mover(dt);
-            bomberman2.controlePorTeclas({teclas:teclas2});
+            bomberman2.controlePorTeclas2({teclas:teclas});
 
             
 
@@ -78,6 +78,13 @@
                 bomberman.bombas[i].desenhar(ctx);
                 bomberman.bombas[i].processoExplosao(dt);  
                 bomberman.bombas[i].encontraCell(); 
+            }
+
+            for(var i = 0; i<bomberman2.bombas.length; i++)
+            {
+                bomberman2.bombas[i].desenhar(ctx);
+                bomberman2.bombas[i].processoExplosao(dt);  
+                bomberman2.bombas[i].encontraCell(); 
             }
 
 

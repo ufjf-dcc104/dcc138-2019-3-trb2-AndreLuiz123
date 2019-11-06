@@ -50,11 +50,16 @@ Bomberman.prototype.controlePorTeclas = function(opcoes){
     if(opcoes.teclas.cima){if(this.y>0)this.vy -= 50;}
     if(opcoes.teclas.baixo){if(this.y+this.h<this.map.SIZE*this.map.LINES)this.vy += 50;}
     if(opcoes.teclas.espaco){this.invocaBomba()}
+}
+
+Bomberman.prototype.controlePorTeclas2 = function(opcoes){
+    this.vx = 0;
+    this.vy = 0;
 
     if(opcoes.teclas.A){if(this.x>0)this.vx -= 50;}
-    if(opcoes.teclas.D){if(this.x+this.w<64*8)this.vx += 50;}
+    if(opcoes.teclas.D){if(this.x+this.w<this.map.SIZE*this.map.COLUMNS)this.vx += 50;}
     if(opcoes.teclas.W){if(this.y>0)this.vy -= 50;}
-    if(opcoes.teclas.S){if(this.y+this.h<64*8)this.vy += 50;}
+    if(opcoes.teclas.S){if(this.y+this.h<this.map.SIZE*this.map.LINES)this.vy += 50;}
     if(opcoes.teclas.E){this.invocaBomba()}
 }
 
