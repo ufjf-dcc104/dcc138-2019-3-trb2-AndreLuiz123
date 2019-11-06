@@ -23,7 +23,7 @@ function Map(modelo) {
     }
 }
 
-Map.prototype.desenhar = function (ctx) {
+Map.prototype.desenhar = function (ctx){
     var cor = "black";
     for (var c = 0; c < this.COLUMNS; c++) {
         for (var l = 0; l < this.LINES; l++) {
@@ -52,4 +52,11 @@ Map.prototype.desenhar = function (ctx) {
             ctx.strokeRect(c * this.SIZE, l * this.SIZE, this.SIZE, this.SIZE);
         }
     }
+}
+
+Map.prototype.voltaCelulaNormal = function(mc, ml){
+
+
+
+
 }

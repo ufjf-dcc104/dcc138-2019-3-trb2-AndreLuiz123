@@ -8,6 +8,7 @@ function Bomba(modelo){
         ml : -1,
         grid: undefined,
         tempoExplosao: 0,
+        tempoExplosao2: 0,
         corBomba: "red"
     }
 
@@ -29,7 +30,7 @@ Bomba.prototype.explodir = function(){
     {
         if(this.mc+i<this.grid.COLUMNS && this.grid.cells[this.mc+i][this.ml].tipo != 1)
         {
-            this.grid.cells[this.mc+i][this.ml].tipo = 0;
+            this.grid.cells[this.mc+i][this.ml].tipo = 3;
         }
         else
         break;
@@ -39,7 +40,7 @@ Bomba.prototype.explodir = function(){
     {
         if(this.mc-i>=0 && this.grid.cells[this.mc-i][this.ml].tipo != 1)
         {
-            this.grid.cells[this.mc-i][this.ml].tipo = 0;
+            this.grid.cells[this.mc-i][this.ml].tipo = 3;
         }
         else
         break;
@@ -51,7 +52,7 @@ Bomba.prototype.explodir = function(){
     {
         if(this.ml+i<this.grid.LINES && this.grid.cells[this.mc][this.ml+i].tipo != 1)
         {
-            this.grid.cells[this.mc][this.ml+i].tipo = 0;
+            this.grid.cells[this.mc][this.ml+i].tipo = 3;
         }
         else
         break;
@@ -61,7 +62,7 @@ Bomba.prototype.explodir = function(){
     {
         if(this.ml-i>=0 && this.grid.cells[this.mc][this.ml-i].tipo != 1)
         {
-            this.grid.cells[this.mc][this.ml-i].tipo = 0;
+            this.grid.cells[this.mc][this.ml-i].tipo = 3;
         }
         else
         break;
@@ -70,7 +71,9 @@ Bomba.prototype.explodir = function(){
 
 Bomba.prototype.processoExplosao = function(dt){
     if(this.x>0 && this.y>0)
+    {
         this.tempoExplosao-=dt;
+    }
     
     if(this.tempoExplosao <=0 && this.x>0 && this.y>0)
     {
@@ -86,6 +89,7 @@ Bomba.prototype.encontraCell = function(){
     {
         this.mc = Math.floor(this.x/64);
         this.ml = Math.floor(this.y/64);
+        this.grid.cells[this.mc][this.ml].tipo = 4;
     }else
     {
         this.mc = -1;

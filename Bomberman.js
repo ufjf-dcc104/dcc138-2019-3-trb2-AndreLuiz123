@@ -6,9 +6,9 @@ function Bomberman(modelo, map){
         vy : 0,
         w: 32,
         h: 32,
-        mc:0,
-        ml:0,
-        mc2:0,
+        mc1:0,
+        ml1:0,
+        mc12:0,
         ml2:0,
         bombas: [],
         nBombas: 1,
@@ -72,97 +72,97 @@ Bomberman.prototype.aplicaRestricoes = function (dt) {
     dnx = dx;
     dy = this.vy * dt;
     dny = dy;
-    if(this.mc>=1 && this.mc<this.map.COLUMNS)
+    if(this.mc1>=1 && this.mc1<this.map.COLUMNS)
     {
-        if (dx > 0 && this.map.cells[this.mc + 1][this.ml].tipo != 0) {
-            dnx = this.map.SIZE * (this.mc + 1) - (this.x + this.w);
+        if (dx > 0 && (this.map.cells[this.mc1 + 1][this.ml1].tipo != 0) && this.map.cells[this.mc1 + 1][this.ml1].tipo != 03 ){
+            dnx = this.map.SIZE * (this.mc1 + 1) - (this.x + this.w);
             dx = Math.min(dnx, dx);
         }
-        if (dx < 0 && this.map.cells[this.mc - 1][this.ml].tipo != 0) {
-            dnx = this.map.SIZE * (this.mc - 1 + 1) - (this.x-1);
+        if (dx < 0 && (this.map.cells[this.mc1 - 1][this.ml1].tipo != 0) && this.map.cells[this.mc1 - 1][this.ml1].tipo != 03 ){
+            dnx = this.map.SIZE * (this.mc1 - 1 + 1) - (this.x-1);
             dx = Math.max(dnx, dx);
         }
     }
 
-    if(this.ml>=1 && this.ml<this.map.LINES)
+    if(this.ml1>=1 && this.ml1<this.map.LINES)
     {
-        if (dy > 0 && this.map.cells[this.mc][this.ml + 1].tipo != 0) {
-            dny = this.map.SIZE * (this.ml + 1) - (this.y + this.h);
+        if (dy > 0 && (this.map.cells[this.mc1][this.ml1 + 1].tipo != 0) && this.map.cells[this.mc1][this.ml1 + 1].tipo != 03 ){
+            dny = this.map.SIZE * (this.ml1 + 1) - (this.y + this.h);
             dy = Math.min(dny, dy);
         }
-        if (dy < 0 && this.map.cells[this.mc][this.ml - 1].tipo != 0) {
-            dny = this.map.SIZE * (this.ml - 1 + 1) - (this.y - 1);
+        if (dy < 0 && (this.map.cells[this.mc1][this.ml1 - 1].tipo != 0) && this.map.cells[this.mc1][this.ml1 - 1].tipo != 03 ){
+            dny = this.map.SIZE * (this.ml1 - 1 + 1) - (this.y - 1);
             dy = Math.max(dny, dy);
         }
     }
 
-    if(this.mc2>=1 && this.mc2<this.map.COLUMNS)
+    if(this.mc12>=1 && this.mc12<this.map.COLUMNS)
     {
-        if (dx > 0 && this.map.cells[this.mc2 + 1][this.ml2].tipo != 0) {
-            dnx = this.map.SIZE * (this.mc2 + 1) - (this.x + this.w);
+        if (dx > 0 && (this.map.cells[this.mc12 + 1][this.ml2].tipo != 0 && this.map.cells[this.mc12 + 1][this.ml2].tipo != 3)) {
+            dnx = this.map.SIZE * (this.mc12 + 1) - (this.x + this.w);
             dx = Math.min(dnx, dx);
         }
-        if (dx < 0 && this.map.cells[this.mc2 - 1][this.ml2].tipo != 0) {
-            dnx = this.map.SIZE * (this.mc2 - 1 + 1) - (this.x-1);
+        if (dx < 0 && (this.map.cells[this.mc12 - 1][this.ml2].tipo != 0 && this.map.cells[this.mc12 - 1][this.ml2].tipo != 3)) {
+            dnx = this.map.SIZE * (this.mc12 - 1 + 1) - (this.x-1);
             dx = Math.max(dnx, dx);
         }
     }
 
     if(this.ml2>=1 && this.ml2<this.map.LINES)
     {
-        if (dy > 0 && this.map.cells[this.mc2][this.ml2 + 1].tipo != 0) {
+        if (dy > 0 && (this.map.cells[this.mc12][this.ml2 + 1].tipo != 0 && this.map.cells[this.mc12][this.ml2 + 1].tipo != 3)) {
             dny = this.map.SIZE * (this.ml2 + 1) - (this.y + this.h);
             dy = Math.min(dny, dy);
         }
-        if (dy < 0 && this.map.cells[this.mc2][this.ml2 - 1].tipo != 0) {
+        if (dy < 0 && (this.map.cells[this.mc12][this.ml2 - 1].tipo != 0 && this.map.cells[this.mc12][this.ml2 - 1].tipo != 3)) {
             dny = this.map.SIZE * (this.ml2 - 1 + 1) - (this.y - 1);
             dy = Math.max(dny, dy);
         }
     }
 
-    if(this.mc2>=1 && this.mc2<this.map.COLUMNS)
+    if(this.mc12>=1 && this.mc12<this.map.COLUMNS)
     {
-        if (dx > 0 && this.map.cells[this.mc2 + 1][this.ml].tipo != 0) {
-            dnx = this.map.SIZE * (this.mc2 + 1) - (this.x + this.w);
+        if (dx > 0 && (this.map.cells[this.mc12 + 1][this.ml1].tipo != 0 && this.map.cells[this.mc12 + 1][this.ml1].tipo != 3)) {
+            dnx = this.map.SIZE * (this.mc12 + 1) - (this.x + this.w);
             dx = Math.min(dnx, dx);
         }
-        if (dx < 0 && this.map.cells[this.mc2 - 1][this.ml].tipo != 0) {
-            dnx = this.map.SIZE * (this.mc2 - 1 + 1) - (this.x-1);
+        if (dx < 0 && (this.map.cells[this.mc12 - 1][this.ml1].tipo != 0 && this.map.cells[this.mc12 - 1][this.ml1].tipo != 3)) {
+            dnx = this.map.SIZE * (this.mc12 - 1 + 1) - (this.x-1);
             dx = Math.max(dnx, dx);
         }
     }
 
-    if(this.ml>=1 && this.ml<this.map.LINES)
+    if(this.ml1>=1 && this.ml1<this.map.LINES)
     {
-        if (dy > 0 && this.map.cells[this.mc2][this.ml + 1].tipo != 0) {
-            dny = this.map.SIZE * (this.ml + 1) - (this.y + this.h);
+        if (dy > 0 && (this.map.cells[this.mc12][this.ml1 + 1].tipo != 0 && this.map.cells[this.mc12][this.ml1 + 1].tipo != 3)) {
+            dny = this.map.SIZE * (this.ml1 + 1) - (this.y + this.h);
             dy = Math.min(dny, dy);
         }
-        if (dy < 0 && this.map.cells[this.mc2][this.ml - 1].tipo != 0) {
-            dny = this.map.SIZE * (this.ml - 1 + 1) - (this.y - 1);
+        if (dy < 0 && (this.map.cells[this.mc12][this.ml1 - 1].tipo != 0 && this.map.cells[this.mc12][this.ml1 - 1].tipo != 3)) {
+            dny = this.map.SIZE * (this.ml1 - 1 + 1) - (this.y - 1);
             dy = Math.max(dny, dy);
         }
     }
 
-    if(this.mc>=1 && this.mc<this.map.COLUMNS)
+    if(this.mc1>=1 && this.mc1<this.map.COLUMNS)
     {
-        if (dx > 0 && this.map.cells[this.mc + 1][this.ml2].tipo != 0) {
-            dnx = this.map.SIZE * (this.mc + 1) - (this.x + this.w);
+        if (dx > 0 && (this.map.cells[this.mc1 + 1][this.ml2].tipo != 0) && this.map.cells[this.mc1 + 1][this.ml2].tipo != 03 ){
+            dnx = this.map.SIZE * (this.mc1 + 1) - (this.x + this.w);
             dx = Math.min(dnx, dx);
         }
-        if (dx < 0 && this.map.cells[this.mc - 1][this.ml2].tipo != 0) {
-            dnx = this.map.SIZE * (this.mc - 1 + 1) - (this.x-1);
+        if (dx < 0 && (this.map.cells[this.mc1 - 1][this.ml2].tipo != 0) && this.map.cells[this.mc1 - 1][this.ml2].tipo != 03 ){
+            dnx = this.map.SIZE * (this.mc1 - 1 + 1) - (this.x-1);
             dx = Math.max(dnx, dx);
         }
     }
 
     if(this.ml2>=1 && this.ml2<this.map.LINES)
     {
-        if (dy > 0 && this.map.cells[this.mc][this.ml2 + 1].tipo != 0) {
+        if (dy > 0 && (this.map.cells[this.mc1][this.ml2 + 1].tipo != 0) && this.map.cells[this.mc1][this.ml2 + 1].tipo != 03 ){
             dny = this.map.SIZE * (this.ml2 + 1) - (this.y + this.h);
             dy = Math.min(dny, dy);
         }
-        if (dy < 0 && this.map.cells[this.mc][this.ml2 - 1].tipo != 0) {
+        if (dy < 0 && (this.map.cells[this.mc1][this.ml2 - 1].tipo != 0) && this.map.cells[this.mc1][this.ml2 - 1].tipo != 03 ){
             dny = this.map.SIZE * (this.ml2 - 1 + 1) - (this.y - 1);
             dy = Math.max(dny, dy);
         }
@@ -200,11 +200,11 @@ Bomberman.prototype.invocaBomba = function(){
 }
 
 Bomberman.prototype.encontraCell = function(){
-        this.mc = Math.floor(this.x/this.map.SIZE);
-        this.ml = Math.floor(this.y/this.map.SIZE);
+        this.mc1 = Math.floor(this.x/this.map.SIZE);
+        this.ml1 = Math.floor(this.y/this.map.SIZE);
 }
 
 Bomberman.prototype.encontraCell2 = function(){
-    this.mc2 = Math.floor((this.x+this.w)/this.map.SIZE);
+    this.mc12 = Math.floor((this.x+this.w)/this.map.SIZE);
     this.ml2 = Math.floor((this.y+this.h)/this.map.SIZE);
 }
