@@ -76,7 +76,8 @@
             for(var i = 0; i<bomberman.bombas.length; i++)
             {
                 bomberman.bombas[i].desenhar(ctx);
-                bomberman.bombas[i].processoExplosao(dt);  
+                bomberman.bombas[i].processoExplosao(dt);
+                bomberman.bombas[i].processoExplosao2(dt);  
                 bomberman.bombas[i].encontraCell(); 
             }
 
@@ -84,9 +85,9 @@
             {
                 bomberman2.bombas[i].desenhar(ctx);
                 bomberman2.bombas[i].processoExplosao(dt);  
+                bomberman2.bombas[i].processoExplosao2(dt);  
                 bomberman2.bombas[i].encontraCell(); 
             }
-
 
             anterior = t;
             ctx.fillStyle = "black";

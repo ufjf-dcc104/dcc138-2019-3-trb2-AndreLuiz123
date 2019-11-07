@@ -67,6 +67,54 @@ Bomba.prototype.explodir = function(){
         else
         break;
     }
+    this.grid.cells[this.mc][this.ml].tipo = 3;
+}
+
+
+Bomba.prototype.acabaExplodir = function(){
+    for(var i = 1; i<this.alcance; i++)
+    {
+        if(this.mc+i<this.grid.COLUMNS && this.grid.cells[this.mc+i][this.ml].tipo === 3)
+        {
+            this.grid.cells[this.mc+i][this.ml].tipo = 0;
+        }
+        else
+        break;
+    }
+
+    for(var i = 1; i<this.alcance; i++)
+    {
+        if(this.mc-i>=0 && this.grid.cells[this.mc-i][this.ml].tipo === 3)
+        {
+            this.grid.cells[this.mc-i][this.ml].tipo = 0;
+        }
+        else
+        break;
+
+
+    }
+
+    for(var i = 1; i<this.alcance; i++)
+    {
+        if(this.ml+i<this.grid.LINES && this.grid.cells[this.mc][this.ml+i].tipo === 3)
+        {
+            this.grid.cells[this.mc][this.ml+i].tipo = 0;
+        }
+        else
+        break;
+    }
+
+    for(var i = 1; i<this.alcance; i++)
+    {
+        if(this.ml-i>=0 && this.grid.cells[this.mc][this.ml-i].tipo === 3)
+        {
+            this.grid.cells[this.mc][this.ml-i].tipo = 0;
+        }
+        else
+        break;
+    }
+
+    this.grid.cells[this.mc][this.ml].tipo = 0;
 }
 
 Bomba.prototype.processoExplosao = function(dt){
@@ -75,21 +123,36 @@ Bomba.prototype.processoExplosao = function(dt){
         this.tempoExplosao-=dt;
     }
     
-    if(this.tempoExplosao <=0 && this.x>0 && this.y>0)
+    if(this.tempoExplosao <=1 && this.x>0 && this.y>0)
     {
         this.explodir();
-        this.x = -10;
-        this.y = -10;
     }
 
 }
 
-Bomba.prototype.encontraCell = function(){
+Bomba.prototype.processoExplosao2 = function(dt){
     if(this.x>0 && this.y>0)
+    {
+        this.tempoExplosao-=dt;
+    }
+    
+    if(this.tempoExplosao <=0 && this.x>0 && this.y>0)
+    {
+        this.acabaExplodir();
+        this.x = -10;
+        this.y = -10;
+    }
+}
+
+Bomba.prototype.encontraCell = function(){
+     if(this.x>0 && this.y>0)
     {
         this.mc = Math.floor(this.x/64);
         this.ml = Math.floor(this.y/64);
+        if(this.tempoExplosao>=1)
         this.grid.cells[this.mc][this.ml].tipo = 4;
+        else
+        this.grid.cells[this.mc][this.ml].tipo = 3;
     }else
     {
         this.mc = -1;

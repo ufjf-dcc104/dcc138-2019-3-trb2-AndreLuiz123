@@ -54,9 +54,10 @@ Map.prototype.desenhar = function (ctx){
     }
 }
 
-Map.prototype.voltaCelulaNormal = function(mc, ml){
+Map.prototype.voltaCelulaNormal = function(mc, ml, tempoRestante){
 
-
-
-
+    if(this.cells[mc][ml].tipo ===3 && tempoRestante<=0)
+    {
+        this.cells[mc][ml].tipo = 0;
+    } 
 }

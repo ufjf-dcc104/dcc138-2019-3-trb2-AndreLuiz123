@@ -13,7 +13,8 @@ function Bomberman(modelo, map){
         bombas: [],
         nBombas: 1,
         bombaAtual: 0,
-        corBomberman: "blue"
+        corBomberman: "blue",
+        podeInvocar: true,
     }
 
     this.map = map;
@@ -188,15 +189,23 @@ Bomberman.prototype.aplicaRestricoes = function (dt) {
 
 Bomberman.prototype.invocaBomba = function(){
 
-    this.bombas[this.bombaAtual].x = Math.floor(this.x/this.map.SIZE)*this.map.SIZE + this.map.SIZE/2;
-    this.bombas[this.bombaAtual].y = Math.floor(this.y/this.map.SIZE)*this.map.SIZE + this.map.SIZE/2;
+    if(this.bombas[this.bombaAtual].x>0 && this.bombas[this.bombaAtual].x>0)
+    this.podeInvocar = false;
+    else
+    this.podeInvocar = true;
 
-    this.bombas[this.bombaAtual].tempoExplosao = 1;
-
-    this.bombaAtual++;
-
-    if(this.bombaAtual+1>this.nBombas)
+    if(this.podeInvocar)
+    {
+        this.bombas[this.bombaAtual].x = Math.floor(this.x/this.map.SIZE)*this.map.SIZE + this.map.SIZE/2;
+        this.bombas[this.bombaAtual].y = Math.floor(this.y/this.map.SIZE)*this.map.SIZE + this.map.SIZE/2;
+        
+        this.bombas[this.bombaAtual].tempoExplosao = 2*3;
+        
+        this.bombaAtual++;
+        
+        if(this.bombaAtual+1>this.nBombas)
         this.bombaAtual = 0;
+    }
 }
 
 Bomberman.prototype.encontraCell = function(){
