@@ -17,6 +17,7 @@
 
         var canvas = document.querySelector("canvas");
         var ctx = canvas.getContext("2d");
+        var fimDeJogo = false;
         var mapa = new Map({COLUMNS:11, LINES:9, SIZE:64, m:
         [
         [1,1,1,1,1,1,1,1,1,1,1],
@@ -61,42 +62,75 @@
 
             mapa.desenhar(ctx);
 
-            bomberman.desenhar(ctx);
-            bomberman.mover(dt);
-            bomberman.controlePorTeclas({teclas:teclas});
-           // bomberman.aplicaRestricoes(dt);
-           // bomberman.encontraCell();
+            if(bomberman.perdeu || bomberman2.perdeu)
+            fimDeJogo = true;
 
-            bomberman2.desenhar(ctx);
-            bomberman2.mover(dt);
-            bomberman2.controlePorTeclas2({teclas:teclas});
+            if(fimDeJogo)
+            {
 
+                if(bomberman.perdeu && bomberman2.perdeu)
+                {
+                    ctx.fillStyle = "black";
+                    ctx.font = "50px Verdana";
+                    ctx.fillText("EMPATE", 100, 200);                
+                }else
+                {
+                    if(bomberman.perdeu)
+                    {
+                        ctx.fillStyle = "black";
+                        ctx.font = "50px Verdana";
+                        ctx.fillText("PLAYER 2 GANHOU", 100, 200);
+                    }else
+                    {
+                        ctx.fillStyle = "black";
+                        ctx.font = "50px Verdana";
+                        ctx.fillText("PLAYER 1 GANHOU", 100, 200);    
+                    }
+                }
+            }else
+            {
+
+                
+                bomberman.desenhar(ctx);
+                bomberman.mover(dt);
+                bomberman.controlePorTeclas({teclas:teclas});
+                // bomberman.aplicaRestricoes(dt);
+                // bomberman.encontraCell();
+                
+                bomberman2.desenhar(ctx);
+                bomberman2.mover(dt);
+                bomberman2.controlePorTeclas2({teclas:teclas});
+                
+                
+                
+                for(var i = 0; i<bomberman.bombas.length; i++)
+                {
+                    bomberman.bombas[i].desenhar(ctx);
+                    bomberman.bombas[i].processoExplosao(dt);
+                    bomberman.bombas[i].processoExplosao2(dt);  
+                    bomberman.bombas[i].encontraCell(); 
+                }
+                
+                for(var i = 0; i<bomberman2.bombas.length; i++)
+                {
+                    bomberman2.bombas[i].desenhar(ctx);
+                    bomberman2.bombas[i].processoExplosao(dt);  
+                    bomberman2.bombas[i].processoExplosao2(dt);  
+                    bomberman2.bombas[i].encontraCell(); 
+                }
+                
+                bomberman.verificaSePerdeu();
+                bomberman2.verificaSePerdeu();
+                
+            }
+                anterior = t;
+                ctx.fillStyle = "black";
+                //ctx.fillText(1 / dt, 10, 20);
+                requestAnimationFrame(passo);
+            }
             
-
-            for(var i = 0; i<bomberman.bombas.length; i++)
-            {
-                bomberman.bombas[i].desenhar(ctx);
-                bomberman.bombas[i].processoExplosao(dt);
-                bomberman.bombas[i].processoExplosao2(dt);  
-                bomberman.bombas[i].encontraCell(); 
-            }
-
-            for(var i = 0; i<bomberman2.bombas.length; i++)
-            {
-                bomberman2.bombas[i].desenhar(ctx);
-                bomberman2.bombas[i].processoExplosao(dt);  
-                bomberman2.bombas[i].processoExplosao2(dt);  
-                bomberman2.bombas[i].encontraCell(); 
-            }
-
-            anterior = t;
-            ctx.fillStyle = "black";
-            ctx.fillText(1 / dt, 10, 20);
-            requestAnimationFrame(passo);
-        }
-
-        var dt, anterior = 0;
-
+            var dt, anterior = 0;
+            
         addEventListener("keydown", function(e){
             console.log(e.keyCode);
             switch(e.keyCode)
